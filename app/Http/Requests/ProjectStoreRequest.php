@@ -24,7 +24,7 @@ class ProjectStoreRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'description' => 'nullable|string',
-            'file'=>'nullable|file|mimes:png,jpg,pdf|max:2048',
+            'file'=>'nullable|image|mimes:png,jpg,pdf|max:2048',
         ];
     }
 }

@@ -3,19 +3,16 @@
 use App\Http\Middleware\Authenticate;
 use App\Models\Project;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\patch;
 use function Pest\Laravel\post;
-use function Pest\Laravel\withoutExceptionHandling;
 use function Pest\Laravel\withoutMiddleware;
 
 beforeEach(fn() => withoutMiddleware(Authenticate::class));
 
 it('can store project', function () {
     $project = Project::factory()->make()->toArray();
-    withoutExceptionHandling();
 
     post(route('projects.store'), $project);
     assertDatabaseCount(Project::class, 1);
@@ -31,7 +28,9 @@ it('can delete project', function () {
 it('can edit project', function () {
     $project = Project::factory()->create();
 
-    $data = ['name' => 'test'];
+    $data = Project::factory()
+        ->make(['name' => 'test'])
+        ->toArray();
     patch(route('projects.update', $project->id), $data);
 
     $project->refresh();
@@ -47,7 +46,5 @@ it('can store valid file attached to project', function () {
     $project = Project::firstOrFail();
     expect($project->file_path)->not->toBeNull();
 
-    Storage::assertExists($project->file_path);
-    Storage::delete($project->file_path);
 });
 

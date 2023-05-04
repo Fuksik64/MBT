@@ -2,6 +2,7 @@
 
 use App\Models\Project;
 use App\Services\ProjectService;
+use Illuminate\Support\Facades\Mail;
 use function Pest\Laravel\assertDatabaseCount;
 
 
@@ -43,4 +44,14 @@ it('can edit project', function () {
         ->start_date->toBe($data['start_date'])
         ->end_date->toBe($data['end_date']);
 
+});
+
+it('can send email', function () {
+    Mail::fake();
+    $project = Project::factory()->create();
+
+    $service = app()->make(ProjectService::class);
+    $service->send($project, 'test@test.com');
+
+    Mail::assertSent(\App\Mail\ProjectEmail::class);
 });
