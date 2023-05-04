@@ -14,7 +14,7 @@ beforeEach(fn() => withoutMiddleware(Authenticate::class));
 it('can store project', function () {
     $project = Project::factory()->make()->toArray();
 
-    post(route('projects.store'), $project);
+    post(route('projects.create.store'), $project);
     assertDatabaseCount(Project::class, 1);
 });
 
@@ -41,7 +41,7 @@ it('can store valid file attached to project', function () {
     $data = Project::factory()
         ->make(['file' => UploadedFile::fake()->image('avatar.jpg')])
         ->toArray();
-    post(route('projects.store'), $data);
+    post(route('projects.create.store'), $data);
 
     $project = Project::firstOrFail();
     expect($project->file_path)->not->toBeNull();
