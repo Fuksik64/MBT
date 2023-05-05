@@ -51,7 +51,7 @@ it('can send email', function () {
     $project = Project::factory()->create();
 
     $service = app()->make(ProjectService::class);
-    $service->send($project, 'test@test.com');
+    $service->sendMail($project, 'test@test.com');
 
     Mail::assertSent(\App\Mail\ProjectEmail::class);
 });
