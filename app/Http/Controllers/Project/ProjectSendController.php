@@ -14,7 +14,7 @@ class ProjectSendController extends Controller
         $data = $request->validate([
             'email' => 'required|email'
         ]);
-        $service->send($project, $data['email']);
+        $service->sendMail($project, $data['email']);
         return back();
     }
 }

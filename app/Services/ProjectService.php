@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class ProjectService
 {
-    public function send(Project $project, string $email): void
+    public function sendMail(Project $project, string $email): void
     {
         Mail::to($email)->send(new \App\Mail\ProjectEmail($project));
     }
@@ -32,12 +32,12 @@ class ProjectService
         $mpdf->WriteHTML('
             <table class="table bg-white border border-gray-200">
                 <thead>
-                <tr>
-                    <th>Nazwa projektu</th>
-                    <th> Data rozpoczęcia</th>
-                    <th> Data zakończenia</th>
-                    <th>Grafika</th>
-                </tr>
+                    <tr>
+                        <th>Nazwa projektu</th>
+                        <th> Data rozpoczęcia</th>
+                        <th> Data zakończenia</th>
+                        <th>Grafika</th>
+                    </tr>
                 </thead>
                 <tbody>'
         );
